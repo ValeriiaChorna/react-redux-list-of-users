@@ -22,7 +22,7 @@ function UserContainer() {
 
   return (
     <PageContainer loading={loading} error={error}>
-      <BackButton href={routes.USERS}>Back to users</BackButton>
+      <BackButton href={routes.HOMEPAGE}>Back to users</BackButton>
       <h1>User details: {userName}</h1>
       <UserContent data={userData} />
     </PageContainer>
