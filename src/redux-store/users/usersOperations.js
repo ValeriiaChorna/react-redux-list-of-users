@@ -3,16 +3,18 @@ import { usersActions } from './index';
 
 axios.defaults.baseURL = 'https://api.github.com';
 
-const fetchUsers = () => dispatch => {
-  dispatch(usersActions.fetchUsersRequest());
+const fetchUsers =
+  (total = 1000, start = 0) =>
+  dispatch => {
+    dispatch(usersActions.fetchUsersRequest());
 
-  axios
-    .get(`/users`)
-    .then(response => {
-      dispatch(usersActions.fetchUsersSuccess(response.data));
-    })
-    .catch(error => dispatch(usersActions.fetchUsersError(error)));
-};
+    axios
+      .get(`/users?per_page=${total}&since=${start}`)
+      .then(response => {
+        dispatch(usersActions.fetchUsersSuccess(response.data));
+      })
+      .catch(error => dispatch(usersActions.fetchUsersError(error)));
+  };
 
 const fetchUser = username => dispatch => {
   dispatch(usersActions.fetchUserRequest());
