@@ -1,30 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { usersActions } from './index';
-
-const getSelectedFields = usersArr => {
-  if (!usersArr.length) {
-    return [];
-  }
-  return usersArr.map(
-    ({ id, login, avatar_url: avatarUrl, html_url: profileLink }) => ({
-      id,
-      login,
-      profileLink,
-      avatarUrl,
-    }),
-  );
-};
+import {
+  getUserSelectedFields,
+  getUsersSelectedFields,
+} from '../../helpers/usersHelpers';
 
 const users = createReducer([], {
   [usersActions.fetchUsersSuccess]: (state, action) =>
-    getSelectedFields(action.payload),
+    getUsersSelectedFields(action.payload),
 });
 
 const user = createReducer(
   {},
   {
-    [usersActions.fetchUserSuccess]: (state, action) => action.payload,
+    [usersActions.fetchUserSuccess]: (state, action) =>
+      getUserSelectedFields(action.payload),
   },
 );
 

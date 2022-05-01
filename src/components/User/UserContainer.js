@@ -1,27 +1,24 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spin } from 'antd';
+import styled from 'styled-components';
+import { Button, Spin } from 'antd';
 import { usersOperations, usersSelectors } from '../../redux-store/users';
-import UsersTable from './UsersTable';
+import UserContent from './UserContent';
 import { Center } from '../Wrappers/Center';
+import routes from '../../routes';
 
-function UsersContainer() {
+function UserContainer() {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  let { userName } = useParams();
 
-  const usersList = useSelector(usersSelectors.getUsers);
+  const userData = useSelector(usersSelectors.getUser);
   const error = useSelector(usersSelectors.getError);
   const loading = useSelector(usersSelectors.getLoading);
 
   useEffect(() => {
-    dispatch(usersOperations.fetchUsers());
+    dispatch(usersOperations.fetchUser(userName));
   }, [dispatch]);
-
-  const onClickTableRow = (event, record) => {
-    event.preventDefault();
-    navigate(`../users/${record.login}`, { replace: true });
-  };
 
   return (
     <>
@@ -32,8 +29,9 @@ function UsersContainer() {
       )}
       {!loading && (
         <div>
-          <h1>Github users</h1>
-          <UsersTable data={usersList} onRowClick={onClickTableRow} />
+          <BackButton href={routes.USERS}>Back to users</BackButton>
+          <h1>User details</h1>
+          <UserContent data={userData} />
         </div>
       )}
       {!!error && (
@@ -45,4 +43,8 @@ function UsersContainer() {
   );
 }
 
-export default UsersContainer;
+export default UserContainer;
+
+const BackButton = styled(Button)`
+  margin-bottom: 40px;
+`;

@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import UsersContainer from '../components/Users/UsersContainer';
+import { PageLayout } from '../components/Wrappers/PageLayout';
 
 function Users() {
   return (
@@ -11,7 +11,3 @@ function Users() {
 }
 
 export default Users;
-
-const PageLayout = styled.div`
-  padding: 10px;
-`;

@@ -4,7 +4,7 @@ import { usersActions } from './index';
 axios.defaults.baseURL = 'https://api.github.com';
 
 const fetchUsers =
-  (total = 1000, start = 0) =>
+  (total = 100, start = 0) =>
   dispatch => {
     dispatch(usersActions.fetchUsersRequest());
 
@@ -16,11 +16,11 @@ const fetchUsers =
       .catch(error => dispatch(usersActions.fetchUsersError(error)));
   };
 
-const fetchUser = username => dispatch => {
+const fetchUser = userName => dispatch => {
   dispatch(usersActions.fetchUserRequest());
 
   axios
-    .get(`/users/${username}`)
+    .get(`/users/${userName}`)
     .then(response => {
       dispatch(usersActions.fetchUserSuccess(response.data));
     })

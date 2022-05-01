@@ -8,11 +8,13 @@ const columns = [
     title: 'Id',
     dataIndex: 'id',
     key: 'id',
+    align: 'center',
   },
   {
     title: 'Login',
     dataIndex: 'login',
     key: 'login',
+    align: 'center',
   },
   {
     title: 'Profile link',
@@ -29,6 +31,7 @@ const columns = [
     dataIndex: 'avatarUrl',
     key: 'avatarUrl',
     render: text => <img src={text} width={100} height={100} />,
+    align: 'center',
   },
 ];
 
@@ -46,6 +49,9 @@ function UsersTable({ data = [], onRowClick = () => {} }) {
             },
           };
         }}
+        pagination={{ position: ['bottomCenter'] }}
+        size="small"
+        // bordered
       />
     </UsersTableStyledContainer>
   );
@@ -54,5 +60,5 @@ function UsersTable({ data = [], onRowClick = () => {} }) {
 export default UsersTable;
 
 const UsersTableStyledContainer = styled.div`
-  padding: 40px;
+  width: 100%;
 `;
