@@ -83,4 +83,8 @@ const UsersTableStyledContainer = styled.div`
   .avatar-img {
     border-radius: 50%;
   }
+
+  .ant-table-row {
+    cursor: pointer;
+  }
 `;
