@@ -4,10 +4,12 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import store from './redux-store/store';
 import './index.css';
+import Sign from './components/Elements/Sign';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <App />
+    <Sign />
   </Provider>,
 );

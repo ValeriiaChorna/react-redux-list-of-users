@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PageLayout = styled.div`
+const PageLayout = styled.div`
   margin: 0 auto;
   padding: 20px 10px;
   max-width: 1200px;
@@ -10,3 +10,5 @@ export const PageLayout = styled.div`
     padding: 30px 50px;
   }
 `;
+
+export default PageLayout;

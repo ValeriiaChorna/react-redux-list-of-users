@@ -1,6 +1,8 @@
 export const initUserDataState = {
   id: null,
+  login: '',
   avatarUrl: '',
+  profileLink: '',
   name: '',
   followers: null,
   following: null,
@@ -32,7 +34,9 @@ export function getUserSelectedFields(userObj = {}) {
   }
   return {
     id: userObj.id || null,
+    login: userObj.login || '',
     avatarUrl: userObj.avatar_url || '',
+    profileLink: userObj.html_url || '',
     name: userObj.name || '',
     followers: userObj.followers || null,
     following: userObj.following || null,

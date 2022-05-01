@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spin } from 'antd';
 import { usersOperations, usersSelectors } from '../../redux-store/users';
 import UsersTable from './UsersTable';
-import { Center } from '../Wrappers/Center';
+import PageContainer from '../Wrappers/PageContainer';
 
 function UsersContainer() {
   const dispatch = useDispatch();
@@ -14,34 +13,43 @@ function UsersContainer() {
   const error = useSelector(usersSelectors.getError);
   const loading = useSelector(usersSelectors.getLoading);
 
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    dispatch(usersOperations.fetchUsers());
-  }, [dispatch]);
+    const total = pageSize;
+    const startFrom = pageSize * (page - 1);
+    dispatch(usersOperations.fetchUsers(total, startFrom));
+  }, [dispatch, pageSize, page]);
 
   const onClickTableRow = (event, record) => {
     event.preventDefault();
     navigate(`../users/${record.login}`, { replace: true });
   };
 
+  const onShowSizeChange = (currentPage, currentPageSize) => {
+    if (pageSize !== currentPageSize) {
+      setPageSize(currentPageSize);
+    }
+  };
+
+  const onChangePage = currentPage => {
+    if (page !== currentPage) {
+      setPage(currentPage);
+    }
+  };
+
   return (
-    <>
-      {!!loading && (
-        <Center>
-          <Spin size="large" />
-        </Center>
-      )}
-      {!loading && (
-        <div>
-          <h1>Github users</h1>
-          <UsersTable data={usersList} onRowClick={onClickTableRow} />
-        </div>
-      )}
-      {!!error && (
-        <Center>
-          <div>Error: {error.message}</div>
-        </Center>
-      )}
-    </>
+    <PageContainer loading={loading} error={error}>
+      <UsersTable
+        usersList={usersList}
+        page={page}
+        pageSize={pageSize}
+        onRowClick={onClickTableRow}
+        onShowSizeChange={onShowSizeChange}
+        onChangePage={onChangePage}
+      />
+    </PageContainer>
   );
 }
 

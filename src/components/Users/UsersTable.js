@@ -21,7 +21,7 @@ const columns = [
     dataIndex: 'profileLink',
     key: 'profileLink',
     render: text => (
-      <a href={text} target={'_blank'} rel={'nofollow noreferrer'}>
+      <a href={text} target="_blank" rel="nofollow noreferrer">
         {text}
       </a>
     ),
@@ -30,18 +30,28 @@ const columns = [
     title: 'Avatar preview',
     dataIndex: 'avatarUrl',
     key: 'avatarUrl',
-    render: text => <img src={text} width={100} height={100} />,
+    render: text => (
+      <img className="avatar-img" src={text} width={100} height={100} />
+    ),
     align: 'center',
   },
 ];
 
-function UsersTable({ data = [], onRowClick = () => {} }) {
+function UsersTable({
+  usersList = [],
+  page = 1,
+  pageSize = 10,
+  total = 100,
+  onRowClick = () => {},
+  onShowSizeChange = () => {},
+  onChangePage = () => {},
+}) {
   return (
     <UsersTableStyledContainer>
       <Table
         rowKey="id"
         columns={columns}
-        dataSource={data}
+        dataSource={usersList}
         onRow={(record, rowIndex) => {
           return {
             onClick: event => {
@@ -51,7 +61,15 @@ function UsersTable({ data = [], onRowClick = () => {} }) {
         }}
         pagination={{ position: ['bottomCenter'] }}
         size="small"
-        // bordered
+        pagination={{
+          total,
+          pageSize,
+          current: page,
+          disabled: !usersList.length,
+          showSizeChanger: true,
+          onShowSizeChange: onShowSizeChange,
+          onChange: onChangePage,
+        }}
       />
     </UsersTableStyledContainer>
   );
@@ -61,4 +79,8 @@ export default UsersTable;
 
 const UsersTableStyledContainer = styled.div`
   width: 100%;
+
+  .avatar-img {
+    border-radius: 50%;
+  }
 `;
