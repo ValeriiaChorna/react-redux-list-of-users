@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { Button } from 'antd';
 import { usersOperations, usersSelectors } from '../../redux-store/users';
-import PageContainer from '../Wrappers/PageContainer';
+import PageContainer from '../Containers/PageContainer';
 import UserContent from './UserContent';
 import routes from '../../routes';
 
 function UserContainer() {
   const dispatch = useDispatch();
   let { userName } = useParams();
+  const navigate = useNavigate();
 
   const userData = useSelector(usersSelectors.getUser);
   const error = useSelector(usersSelectors.getError);
@@ -20,17 +19,15 @@ function UserContainer() {
     dispatch(usersOperations.fetchUser(userName));
   }, [dispatch]);
 
+  const onBack = () => {
+    navigate(routes.HOMEPAGE);
+  };
+
   return (
     <PageContainer loading={loading} error={error}>
-      <BackButton href={routes.HOMEPAGE}>Back to users</BackButton>
-      <h1>User details: {userName}</h1>
-      <UserContent data={userData} />
+      <UserContent data={userData} onBack={onBack} />
     </PageContainer>
   );
 }
 
 export default UserContainer;
-
-const BackButton = styled(Button)`
-  margin-bottom: 40px;
-`;

@@ -1,6 +1,6 @@
 import React from 'react';
 import UsersContainer from '../components/Users/UsersContainer';
-import PageLayout from '../components/Wrappers/PageLayout';
+import PageLayout from '../components/Layouts/PageLayout';
 
 function Users() {
   return (

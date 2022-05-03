@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
+import ExternalLink from '../Elements/ExternalLink';
 
 const columns = [
   {
@@ -20,19 +21,13 @@ const columns = [
     title: 'Profile link',
     dataIndex: 'profileLink',
     key: 'profileLink',
-    render: text => (
-      <a href={text} target="_blank" rel="nofollow noreferrer">
-        {text}
-      </a>
-    ),
+    render: text => <ExternalLink href={text} />,
   },
   {
     title: 'Avatar preview',
     dataIndex: 'avatarUrl',
     key: 'avatarUrl',
-    render: text => (
-      <img className="avatar-img" src={text} width={100} height={100} />
-    ),
+    render: text => <AvatarImg src={text} width={100} height={100} />,
     align: 'center',
   },
 ];
@@ -46,30 +41,34 @@ function UsersTable({
   onShowSizeChange = () => {},
   onChangePage = () => {},
 }) {
+  const paginationConfig = {
+    position: ['bottomCenter'],
+    total,
+    pageSize,
+    current: page,
+    disabled: !usersList.length,
+    showSizeChanger: true,
+    onShowSizeChange: onShowSizeChange,
+    onChange: onChangePage,
+  };
+
+  const onRow = (record, rowIndex) => {
+    return {
+      onClick: event => {
+        onRowClick(event, record, rowIndex);
+      },
+    };
+  };
+
   return (
     <UsersTableStyledContainer>
       <Table
         rowKey="id"
         columns={columns}
         dataSource={usersList}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: event => {
-              onRowClick(event, record, rowIndex);
-            },
-          };
-        }}
-        pagination={{ position: ['bottomCenter'] }}
+        onRow={onRow}
         size="small"
-        pagination={{
-          total,
-          pageSize,
-          current: page,
-          disabled: !usersList.length,
-          showSizeChanger: true,
-          onShowSizeChange: onShowSizeChange,
-          onChange: onChangePage,
-        }}
+        pagination={paginationConfig}
       />
     </UsersTableStyledContainer>
   );
@@ -78,13 +77,11 @@ function UsersTable({
 export default UsersTable;
 
 const UsersTableStyledContainer = styled.div`
-  width: 100%;
-
-  .avatar-img {
-    border-radius: 50%;
-  }
-
   .ant-table-row {
     cursor: pointer;
   }
+`;
+
+const AvatarImg = styled.img`
+  border-radius: 50%;
 `;

@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersOperations, usersSelectors } from '../../redux-store/users';
 import UsersTable from './UsersTable';
-import PageContainer from '../Wrappers/PageContainer';
+import PageContainer from '../Containers/PageContainer';
 
 function UsersContainer() {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const usersList = useSelector(usersSelectors.getUsers);
   const error = useSelector(usersSelectors.getError);
@@ -24,7 +24,7 @@ function UsersContainer() {
 
   const onClickTableRow = (event, record) => {
     event.preventDefault();
-    navigate(`../users/${record.login}`, { replace: true });
+    navigate(`../users/${record.login}`);
   };
 
   const onShowSizeChange = (currentPage, currentPageSize) => {

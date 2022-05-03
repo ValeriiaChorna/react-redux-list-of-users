@@ -1,17 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import ExternalLink from './ExternalLink';
 
 function Sign() {
   return (
     <SignStyledWrap>
       Developed by{' '}
-      <a
-        href={'https://github.com/ValeriiaChorna'}
-        target="_blank"
-        rel="nofollow noreferrer"
-      >
+      <ExternalLink href={'https://github.com/ValeriiaChorna'}>
         @valeriia_chorna
-      </a>{' '}
+      </ExternalLink>{' '}
       2022
     </SignStyledWrap>
   );
