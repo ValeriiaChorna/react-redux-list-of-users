@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersOperations, usersSelectors } from '../../redux-store/users';
-import PageContainer from '../Containers/PageContainer';
-import UserContent from './UserContent';
+import PageContainer from './PageContainer';
+import UserContent from '../User/UserContent';
 import routes from '../../routes';
 
 function UserContainer() {
@@ -17,7 +17,7 @@ function UserContainer() {
 
   useEffect(() => {
     dispatch(usersOperations.fetchUser(userName));
-  }, [dispatch]);
+  }, [dispatch, userName]);
 
   const onBack = () => {
     navigate(routes.HOMEPAGE);

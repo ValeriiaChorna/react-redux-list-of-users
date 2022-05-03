@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersOperations, usersSelectors } from '../../redux-store/users';
-import UsersTable from './UsersTable';
-import PageContainer from '../Containers/PageContainer';
+import UsersTable from '../Users/UsersTable';
+import PageContainer from './PageContainer';
 
 function UsersContainer() {
   const dispatch = useDispatch();
